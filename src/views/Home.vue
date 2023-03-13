@@ -15,6 +15,7 @@
         class="mx-auto text-center"
         max-width="344"
         variant="outlined"
+        
       >
 
         <v-card-item>
@@ -44,36 +45,43 @@
               >Let's Connect</v-btn>
             </template>
             <template v-slot:default="{ isActive }">
-              <v-card>
-                <v-toolbar
-                  title=""
-                ></v-toolbar>
+              <v-card max-width="444" width="384">
+                <!-- <v-toolbar
+                  title="Let's Connect"
+                ></v-toolbar> -->
                 <v-card-text>
-                  <div class="text-h2 pa-12">Let's Connect</div>
+                  <div class="text-h5 pa-2">Let's Connect</div>
                 </v-card-text>
-                <v-container>
-                <v-text-field
-                  label="Email address"
-                  placeholder="johndoe@gmail.com"
-                  type="email"
-                  variant="outlined"
-                ></v-text-field>
 
-                  <v-textarea
-                    clearable
-                    clear-icon="mdi-close-circle"
-                    label="Message"
-                    model-value=""
+                <v-container>
+                  <v-text-field
+                    label="Email address"
+                    placeholder="johndoe@gmail.com"
+                    type="email"
                     variant="outlined"
-                  ></v-textarea>
+                    density="compact"
+                  ></v-text-field>
+
+                    <v-textarea
+                      clearable
+                      clear-icon="mdi-close-circle"
+                      label="Message"
+                      model-value=""
+                      variant="outlined"
+                      density="compact"
+                      rows="3"
+                    ></v-textarea>
                 </v-container>
+
                 <v-card-actions class="justify-end">
                   <v-btn
                     variant="outlined"
+                    size="small"
                     @click="isActive.value = false"
                   >Submit</v-btn>
                   <v-btn
                     variant="outlined"
+                    size="small"
                     @click="isActive.value = false"
                   >Close</v-btn>
                 </v-card-actions>
