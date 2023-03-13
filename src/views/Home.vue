@@ -12,7 +12,7 @@
 <!--      </v-app-bar>-->
 
       <v-card
-        class="mx-auto"
+        class="mx-auto text-center"
         max-width="344"
         variant="outlined"
       >
@@ -27,9 +27,10 @@
             </div>
             <div class="text-caption mb-1">Web Developer</div>
           </div>
+        
         </v-card-item>
 
-        <v-card-actions>
+        <v-card-actions class="justify-center">
           <v-dialog
             transition="dialog-top-transition"
             width="auto"
@@ -39,7 +40,7 @@
                 variant="outlined"
                 v-bind="props"
                 class="mb-1"
-                size="small"
+                size="x-small"
               >Let's Connect</v-btn>
             </template>
             <template v-slot:default="{ isActive }">
@@ -68,11 +69,11 @@
                 </v-container>
                 <v-card-actions class="justify-end">
                   <v-btn
-                    variant="text"
+                    variant="outlined"
                     @click="isActive.value = false"
                   >Submit</v-btn>
                   <v-btn
-                    variant="text"
+                    variant="outlined"
                     @click="isActive.value = false"
                   >Close</v-btn>
                 </v-card-actions>
@@ -86,17 +87,20 @@
         <v-expansion-panels>
           <v-expansion-panel
             title="About"
+            class="text-caption text-left"
             text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima"
           >
           </v-expansion-panel>
           <v-expansion-panel
             title="Projects"
+            class="text-caption"
             text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima"
           >
           </v-expansion-panel>
           <v-expansion-panel
             title="Skills"
-            text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima"
+            class="text-caption"
+            text="My skill is to make my sweetheart happy"
           >
           </v-expansion-panel>
         </v-expansion-panels>
@@ -107,7 +111,7 @@
     </div>
 
   </div>
-  <v-footer border>2023 - Dexter Bagtang </v-footer>
+  <v-footer border class="text-caption">2023 - Dexter Bagtang </v-footer>
 </template>
 
 <script setup>
