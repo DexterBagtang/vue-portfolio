@@ -1,21 +1,13 @@
 <template>
   <div class="h-screen">
     <div class="text-center mt-16">
-<!--      <v-app-bar :elevation="2">-->
-        <v-system-bar>
-          <v-icon icon="mdi-wifi-strength-4"></v-icon>
-          <v-icon icon="mdi-signal" class="ms-2"></v-icon>
-          <v-icon icon="mdi-battery" class="ms-2"></v-icon>
 
-          <span class="ms-2">3:13PM</span>
-        </v-system-bar>
-<!--      </v-app-bar>-->
 
       <v-card
         class="mx-auto text-center"
         max-width="344"
         variant="outlined"
-        
+
       >
 
         <v-card-item>
@@ -28,7 +20,7 @@
             </div>
             <div class="text-caption mb-1">Web Developer</div>
           </div>
-        
+
         </v-card-item>
 
         <v-card-actions class="justify-center">
@@ -74,11 +66,15 @@
                 </v-container>
 
                 <v-card-actions class="justify-end">
+
                   <v-btn
                     variant="outlined"
                     size="small"
-                    @click="isActive.value = false"
+                    @click="isActive.value = false;"
                   >Submit</v-btn>
+
+
+
                   <v-btn
                     variant="outlined"
                     size="small"
@@ -94,6 +90,7 @@
         </v-card-actions>
         <v-expansion-panels>
           <v-expansion-panel
+            variant="accordion"
             title="About"
             class="text-caption text-left"
             text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima"
@@ -105,11 +102,126 @@
             text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima"
           >
           </v-expansion-panel>
+
           <v-expansion-panel
             title="Skills"
             class="text-caption"
-            text="My skill is to make my sweetheart happy"
           >
+
+            <v-expansion-panel-text class="text-left">
+              <v-chip
+                class="ma-2"
+                prepend-icon="mdi-laravel"
+                color="red"
+                variant="outlined"
+              >
+                Laravel
+              </v-chip>
+
+              <v-chip
+                class="ma-2"
+                color="primary"
+                text-color="black"
+                prepend-icon="mdi-language-php"
+              >
+                PHP
+              </v-chip>
+
+              <v-chip
+                class="ma-2"
+                color="deep-orange"
+                text-color="white"
+                append-icon="mdi-language-html5"
+              >
+                HTML
+              </v-chip>
+
+              <v-chip
+                class="ma-2"
+                color="blue-darken-3"
+                text-color="white"
+                append-icon="mdi-language-css3"
+              >
+                CSS
+              </v-chip>
+
+              <v-chip
+                class="ma-2"
+                color="yellow"
+                text-color="black"
+                variant="flat"
+                append-icon="mdi-language-javascript"
+              >
+                Javascript
+              </v-chip>
+
+
+
+              <v-chip
+                class="ma-2"
+                color="deep-purple"
+                text-color="white"
+                prepend-icon="mdi-bootstrap"
+                :model-value="true"
+
+              >
+                Bootstrap
+              </v-chip>
+
+              <v-chip
+                class="ma-2"
+                color="cyan"
+                text-color="white"
+                prepend-icon="mdi-database-search"
+                :model-value="true"
+              >
+                MySQL
+              </v-chip>
+
+              <v-chip
+                class="ma-2"
+                color="teal"
+                text-color="white"
+                prepend-icon="mdi-vuejs"
+                :model-value="true"
+              >
+                Vue
+              </v-chip>
+
+              <v-chip
+                class="ma-2"
+                color="light-blue"
+                text-color="white"
+                prepend-icon="mdi-tailwind"
+                :model-value="true"
+              >
+                Tailwind
+              </v-chip>
+
+              <v-chip
+                class="ma-2"
+                color="deep-orange-accent-3"
+                text-color="black"
+                prepend-icon="mdi-web"
+                :model-value="true"
+                variant="flat"
+              >
+                Apache
+              </v-chip>
+
+              <v-chip
+                class="ma-2"
+                color="red"
+                text-color="white"
+                prepend-icon="mdi-redhat"
+                variant="outlined"
+                :model-value="true"
+              >
+                CentOS AlmaLinux
+              </v-chip>
+
+            </v-expansion-panel-text>
+
           </v-expansion-panel>
         </v-expansion-panels>
       </v-card>
@@ -122,6 +234,4 @@
   <v-footer border class="text-caption">2023 - Dexter Bagtang </v-footer>
 </template>
 
-<script setup>
-  //
-</script>
+
