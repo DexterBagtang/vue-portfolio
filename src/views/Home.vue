@@ -225,13 +225,81 @@
           </v-expansion-panel>
         </v-expansion-panels>
       </v-card>
-
-
-
     </div>
 
+
+
+    <div class="w-75 mx-auto mt-5 flex-wrap justify-lg-center">
+      <v-text-field
+        :loading="loading"
+        density="compact"
+        variant="outlined"
+        label="Search templates"
+        :append-inner-icon="loading ? '' : 'mdi-send'"
+        single-line
+        hide-details
+        v-model="prompt"
+        @click:append-inner="generateText"
+      ></v-text-field>
+    <hr>
+      <v-container v-for="result in results.choices" v-text="result.text">
+      </v-container>
+    <hr>
   </div>
-  <v-footer border class="text-caption">2023 - Dexter Bagtang </v-footer>
+  </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data(){
+    return{
+      prompt:'',
+      results:'',
+      loaded: false,
+      loading: false,
+
+    }
+  },
+
+
+  methods:{
+    async generateText() {
+      this.loading=true;
+      const apiKey = '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';
+      const url = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
+
+      const prompt = this.prompt;
+      const maxTokens = 1024;
+      const n = 1;
+      const temperature = 0.7;
+
+      try {
+        const response = await axios.post(url, {
+          prompt,
+          max_tokens: maxTokens,
+          n: n,
+          temperature: temperature
+        }, {
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        console.log(response.data.choices[0].text);
+        this.results = response.data;
+        this.loading=false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // onClick () {
+    //   this.loading = true
+    // },
+
+  }
+}
+</script>
 
 
