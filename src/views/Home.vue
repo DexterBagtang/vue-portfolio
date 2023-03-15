@@ -229,19 +229,18 @@
 
 
 
-    <div class="w-75 mx-auto mt-5 flex-wrap justify-lg-center">
+    <div class="w-75 mx-auto mt-5 mb-2 flex-wrap justify-lg-center">
       <v-text-field
         :loading="loading"
         density="compact"
         variant="outlined"
-        label="Search templates"
+        label="Ask anything"
         :append-inner-icon="loading ? '' : 'mdi-send'"
         single-line
         hide-details
         v-model="prompt"
         @click:append-inner="generateText"
       ></v-text-field>
-    <hr>
       <v-container v-for="result in results.choices" v-text="result.text">
       </v-container>
     <hr>
@@ -267,8 +266,10 @@ export default {
   methods:{
     async generateText() {
       this.loading=true;
-      const apiKey = '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';
+      const apiKey = import.meta.env.VITE_API_KEY;
       const url = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
+
+      console.log(apiKey)
 
       const prompt = this.prompt;
       const maxTokens = 1024;
