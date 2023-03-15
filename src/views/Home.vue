@@ -266,10 +266,9 @@ export default {
   methods:{
     async generateText() {
       this.loading=true;
+
       const apiKey = import.meta.env.VITE_API_KEY;
       const url = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
-
-      console.log(apiKey)
 
       const prompt = this.prompt;
       const maxTokens = 1024;
