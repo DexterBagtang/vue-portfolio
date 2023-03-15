@@ -267,7 +267,7 @@ export default {
   methods:{
     async generateText() {
       this.loading=true;
-      const apiKey = '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';
+      const apiKey = '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';
       const url = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
 
       const prompt = this.prompt;
