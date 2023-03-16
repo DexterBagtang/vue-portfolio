@@ -34,7 +34,8 @@
                 v-bind="props"
                 class="mb-1"
                 size="x-small"
-              >Let's Connect</v-btn>
+              >Let's Connect
+              </v-btn>
             </template>
             <template v-slot:default="{ isActive }">
               <v-card max-width="444" width="384">
@@ -54,15 +55,15 @@
                     density="compact"
                   ></v-text-field>
 
-                    <v-textarea
-                      clearable
-                      clear-icon="mdi-close-circle"
-                      label="Message"
-                      model-value=""
-                      variant="outlined"
-                      density="compact"
-                      rows="3"
-                    ></v-textarea>
+                  <v-textarea
+                    clearable
+                    clear-icon="mdi-close-circle"
+                    label="Message"
+                    model-value=""
+                    variant="outlined"
+                    density="compact"
+                    rows="3"
+                  ></v-textarea>
                 </v-container>
 
                 <v-card-actions class="justify-end">
@@ -71,22 +72,23 @@
                     variant="outlined"
                     size="small"
                     @click="isActive.value = false;"
-                  >Submit</v-btn>
-
+                  >Submit
+                  </v-btn>
 
 
                   <v-btn
                     variant="outlined"
                     size="small"
                     @click="isActive.value = false"
-                  >Close</v-btn>
+                  >Close
+                  </v-btn>
                 </v-card-actions>
               </v-card>
             </template>
           </v-dialog>
-<!--          <v-btn variant="outlined">-->
-<!--            Know more-->
-<!--          </v-btn>-->
+          <!--          <v-btn variant="outlined">-->
+          <!--            Know more-->
+          <!--          </v-btn>-->
         </v-card-actions>
         <v-expansion-panels>
           <v-expansion-panel
@@ -114,6 +116,7 @@
                 prepend-icon="mdi-laravel"
                 color="red"
                 variant="outlined"
+                size="x-small"
               >
                 Laravel
               </v-chip>
@@ -123,6 +126,7 @@
                 color="primary"
                 text-color="black"
                 prepend-icon="mdi-language-php"
+                size="x-small"
               >
                 PHP
               </v-chip>
@@ -132,6 +136,7 @@
                 color="deep-orange"
                 text-color="white"
                 append-icon="mdi-language-html5"
+                size="x-small"
               >
                 HTML
               </v-chip>
@@ -141,6 +146,7 @@
                 color="blue-darken-3"
                 text-color="white"
                 append-icon="mdi-language-css3"
+                size="x-small"
               >
                 CSS
               </v-chip>
@@ -151,10 +157,10 @@
                 text-color="black"
                 variant="flat"
                 append-icon="mdi-language-javascript"
+                size="x-small"
               >
                 Javascript
               </v-chip>
-
 
 
               <v-chip
@@ -162,6 +168,7 @@
                 color="deep-purple"
                 text-color="white"
                 prepend-icon="mdi-bootstrap"
+                size="x-small"
                 :model-value="true"
 
               >
@@ -173,6 +180,7 @@
                 color="cyan"
                 text-color="white"
                 prepend-icon="mdi-database-search"
+                size="x-small"
                 :model-value="true"
               >
                 MySQL
@@ -183,6 +191,7 @@
                 color="teal"
                 text-color="white"
                 prepend-icon="mdi-vuejs"
+                size="x-small"
                 :model-value="true"
               >
                 Vue
@@ -193,6 +202,7 @@
                 color="light-blue"
                 text-color="white"
                 prepend-icon="mdi-tailwind"
+                size="x-small"
                 :model-value="true"
               >
                 Tailwind
@@ -205,6 +215,7 @@
                 prepend-icon="mdi-web"
                 :model-value="true"
                 variant="flat"
+                size="x-small"
               >
                 Apache
               </v-chip>
@@ -216,6 +227,7 @@
                 prepend-icon="mdi-redhat"
                 variant="outlined"
                 :model-value="true"
+                size="x-small"
               >
                 CentOS AlmaLinux
               </v-chip>
@@ -231,46 +243,50 @@
 
       <v-card variant="outlined" class="mb-5" v-if="submitted">
 
-        <v-card-title v-text="submittedPrompt" style="white-space: pre-wrap"></v-card-title>
+        <v-card-title class="text-caption" v-text="submittedPrompt" style="white-space: pre-wrap"></v-card-title>
 
         <v-card-text class="text-center" v-if="loading">
           <v-progress-circular
             :size="50"
+            width="2"
             indeterminate
-            color="primary"
+
           ></v-progress-circular>
         </v-card-text>
-        <v-card-text v-text="results.slice(2)" style="white-space: pre-wrap" v-else></v-card-text>
+        <v-card-text class="text-caption" v-text="results.slice(1)" style="white-space: pre-wrap" v-else></v-card-text>
       </v-card>
 
-      <v-textarea
-        auto-grow
-        rows="1"
-        :loading="loading"
-        density="compact"
-        variant="outlined"
-        label="Ask anything"
-        :append-icon="loading ? '' : 'mdi-send'"
-        clearable
-        clear-icon="mdi-close-circle"
-        v-model="prompt"
-        @click:append="generateText"
-      ></v-textarea>
+    </v-container>
 
-  </v-container>
+    <v-textarea
+      auto-grow
+      rows="1"
+      :loading="loading"
+      density="compact"
+      variant="outlined"
+      label="Ask anything"
+      :append-icon="loading ? '' : 'mdi-send'"
+      clearable
+      clear-icon="mdi-close-circle"
+      v-model="prompt"
+      @click:append="generateText"
+      class="text-caption mx-auto"
+    ></v-textarea>
+
   </div>
+
 </template>
 
 <script>
 import axios from 'axios';
 
 export default {
-  data(){
-    return{
-      prompt:'',
-      submitted:false,
-      submittedPrompt:'',
-      results:'',
+  data() {
+    return {
+      prompt: '',
+      submitted: false,
+      submittedPrompt: '',
+      results: '',
       loaded: false,
       loading: false,
 
@@ -278,15 +294,16 @@ export default {
   },
 
 
-  methods:{
+  methods: {
     async generateText() {
-      this.submittedPrompt=this.prompt;
-      this.prompt='';
-      this.submitted=true;
-      this.loading=true;
+      this.submittedPrompt = this.prompt;
+      this.prompt = '';
+      this.submitted = true;
+      this.loading = true;
 
       const apiKey = import.meta.env.VITE_API_KEY;
       const url = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
+
 
       const prompt = this.submittedPrompt;
       const maxTokens = 1024;
@@ -307,7 +324,7 @@ export default {
         });
         console.log(response.data.choices[0]);
         this.results = response.data.choices[0].text;
-        this.loading=false;
+        this.loading = false;
       } catch (error) {
         console.error(error);
       }
