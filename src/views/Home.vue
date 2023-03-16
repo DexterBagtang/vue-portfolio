@@ -227,23 +227,48 @@
       </v-card>
     </div>
 
+    <div class="w-50 mx-auto mt-5 mb-2 flex-wrap justify-lg-center">
+<!--      <v-card variant="outlined" class="mb-5" v-if="previousResults !== ''">-->
+<!--        &lt;!&ndash;        <v-card-text v-text="prompt"></v-card-text>&ndash;&gt;-->
+<!--        <v-card-text v-for="previousResult in previousResults" v-text="previousResult.slice(2)" style="white-space: pre-wrap"></v-card-text>-->
+<!--      </v-card>-->
+
+<!--      <v-card variant="outlined" class="mb-5" v-if="results !== ''">-->
+<!--        &lt;!&ndash;        <v-card-text v-text="prompt"></v-card-text>&ndash;&gt;-->
+<!--        <v-card-text v-text="results.slice(2)" style="white-space: pre-wrap"></v-card-text>-->
+<!--      </v-card>-->
+
+      <v-card variant="outlined" class="mb-5" v-if="submitted">
+
+        <v-card-title v-text="submittedPrompt"></v-card-title>
+
+        <v-card-text class="text-center" v-if="loading">
+          <v-progress-circular
+            :size="50"
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
+        </v-card-text>
+        <v-card-text v-text="results.slice(2)" style="white-space: pre-wrap" v-else></v-card-text>
+      </v-card>
 
 
-    <div class="w-75 mx-auto mt-5 mb-2 flex-wrap justify-lg-center">
-      <v-text-field
+
+      <v-textarea
+        auto-grow
+        rows="1"
         :loading="loading"
+        loading-text="Loading... Please wait"
         density="compact"
         variant="outlined"
         label="Ask anything"
-        :append-inner-icon="loading ? '' : 'mdi-send'"
-        single-line
-        hide-details
+        :append-icon="loading ? '' : 'mdi-send'"
+        clearable
+        clear-icon="mdi-close-circle"
         v-model="prompt"
-        @click:append-inner="generateText"
-      ></v-text-field>
-      <v-container v-for="result in results.choices" v-text="result.text">
-      </v-container>
-    <hr>
+        @click:append="generateText"
+      ></v-textarea>
+
   </div>
   </div>
 </template>
@@ -255,6 +280,8 @@ export default {
   data(){
     return{
       prompt:'',
+      submitted:false,
+      submittedPrompt:'',
       results:'',
       loaded: false,
       loading: false,
@@ -265,12 +292,16 @@ export default {
 
   methods:{
     async generateText() {
+      this.submittedPrompt=this.prompt;
+      this.prompt='';
+      this.submitted=true;
       this.loading=true;
+      // this.results='';
 
       const apiKey = import.meta.env.VITE_API_KEY;
       const url = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
 
-      const prompt = this.prompt;
+      const prompt = this.submittedPrompt;
       const maxTokens = 1024;
       const n = 1;
       const temperature = 0.7;
@@ -287,9 +318,10 @@ export default {
             'Content-Type': 'application/json'
           }
         });
-        console.log(response.data.choices[0].text);
-        this.results = response.data;
+        console.log(response.data.choices[0]);
+        this.results = response.data.choices[0].text;
         this.loading=false;
+        this.previousResults.push(this.results);
       } catch (error) {
         console.error(error);
       }
