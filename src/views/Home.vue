@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen">
+  <div class="h-screen w-75 mx-auto">
     <div class="text-center mt-16">
 
 
@@ -227,20 +227,11 @@
       </v-card>
     </div>
 
-    <div class="w-50 mx-auto mt-5 mb-2 flex-wrap justify-lg-center">
-<!--      <v-card variant="outlined" class="mb-5" v-if="previousResults !== ''">-->
-<!--        &lt;!&ndash;        <v-card-text v-text="prompt"></v-card-text>&ndash;&gt;-->
-<!--        <v-card-text v-for="previousResult in previousResults" v-text="previousResult.slice(2)" style="white-space: pre-wrap"></v-card-text>-->
-<!--      </v-card>-->
-
-<!--      <v-card variant="outlined" class="mb-5" v-if="results !== ''">-->
-<!--        &lt;!&ndash;        <v-card-text v-text="prompt"></v-card-text>&ndash;&gt;-->
-<!--        <v-card-text v-text="results.slice(2)" style="white-space: pre-wrap"></v-card-text>-->
-<!--      </v-card>-->
+    <v-container fluid class="mt-5 mb-2 flex-wrap justify-lg-center">
 
       <v-card variant="outlined" class="mb-5" v-if="submitted">
 
-        <v-card-title v-text="submittedPrompt"></v-card-title>
+        <v-card-title v-text="submittedPrompt" style="white-space: pre-wrap"></v-card-title>
 
         <v-card-text class="text-center" v-if="loading">
           <v-progress-circular
@@ -252,13 +243,10 @@
         <v-card-text v-text="results.slice(2)" style="white-space: pre-wrap" v-else></v-card-text>
       </v-card>
 
-
-
       <v-textarea
         auto-grow
         rows="1"
         :loading="loading"
-        loading-text="Loading... Please wait"
         density="compact"
         variant="outlined"
         label="Ask anything"
@@ -269,7 +257,7 @@
         @click:append="generateText"
       ></v-textarea>
 
-  </div>
+  </v-container>
   </div>
 </template>
 
@@ -296,7 +284,6 @@ export default {
       this.prompt='';
       this.submitted=true;
       this.loading=true;
-      // this.results='';
 
       const apiKey = import.meta.env.VITE_API_KEY;
       const url = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
@@ -321,14 +308,10 @@ export default {
         console.log(response.data.choices[0]);
         this.results = response.data.choices[0].text;
         this.loading=false;
-        this.previousResults.push(this.results);
       } catch (error) {
         console.error(error);
       }
     },
-    // onClick () {
-    //   this.loading = true
-    // },
 
   }
 }
