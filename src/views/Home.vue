@@ -2,6 +2,18 @@
   <div class="h-screen w-75 mx-auto">
     <div class="text-center mt-16">
 
+      <v-alert
+        v-if="sent"
+        title="Thank You"
+        icon="$success"
+        closable
+        close-label="Close Alert"
+        density="compact"
+        variant="outlined"
+        class="mb-5 w-75 mx-auto"
+        text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima, at placeat totam, magni doloremque veniam neque porro libero rerum unde voluptatem!"
+      ></v-alert>
+
 
       <v-card
         class="mx-auto text-center"
@@ -27,14 +39,23 @@
           <v-dialog
             transition="dialog-top-transition"
             width="auto"
+            v-model="modal"
           >
             <template v-slot:activator="{ props }">
               <v-btn
+                v-if="!sent"
                 variant="outlined"
                 v-bind="props"
                 class="mb-1"
                 size="x-small"
               >Let's Connect
+              </v-btn>
+              <v-btn
+                v-else
+                variant="outlined"
+                class="mb-1"
+                size="x-small"
+              >Thank You !
               </v-btn>
             </template>
             <template v-slot:default="{ isActive }">
@@ -46,43 +67,49 @@
                   <div class="text-h5 pa-2">Let's Connect</div>
                 </v-card-text>
 
-                <v-container>
-                  <v-text-field
-                    label="Email address"
-                    placeholder="johndoe@gmail.com"
-                    type="email"
-                    variant="outlined"
-                    density="compact"
-                  ></v-text-field>
 
-                  <v-textarea
-                    clearable
-                    clear-icon="mdi-close-circle"
-                    label="Message"
-                    model-value=""
-                    variant="outlined"
-                    density="compact"
-                    rows="3"
-                  ></v-textarea>
-                </v-container>
+                  <v-container>
+                    <v-text-field
+                      label="Email address"
+                      placeholder="johndoe@gmail.com"
+                      type="email"
+                      variant="outlined"
+                      density="compact"
+                      v-model="email"
+                    ></v-text-field>
 
-                <v-card-actions class="justify-end">
+                    <v-textarea
+                      clearable
+                      auto-grow
+                      clear-icon="mdi-close-circle"
+                      label="Message"
+                      model-value=""
+                      variant="outlined"
+                      density="compact"
+                      rows="3"
+                      v-model="message"
+                    ></v-textarea>
+                  </v-container>
+                  <v-card-actions class="justify-end">
 
-                  <v-btn
-                    variant="outlined"
-                    size="small"
-                    @click="isActive.value = false;"
-                  >Submit
-                  </v-btn>
+                    <v-btn
+                      variant="outlined"
+                      size="small"
+                      type="submit"
+                      @click="sendEmail"
+                    >Submit
+                    </v-btn>
 
 
-                  <v-btn
-                    variant="outlined"
-                    size="small"
-                    @click="isActive.value = false"
-                  >Close
-                  </v-btn>
-                </v-card-actions>
+                    <v-btn
+                      variant="outlined"
+                      size="small"
+                      @click="isActive.value = false"
+                    >Close
+                    </v-btn>
+                  </v-card-actions>
+
+
               </v-card>
             </template>
           </v-dialog>
@@ -283,14 +310,25 @@ import axios from 'axios';
 export default {
   data() {
     return {
+
       prompt: '',
       submitted: false,
       submittedPrompt: '',
       results: '',
       loaded: false,
       loading: false,
+      email:'',
+      message:'',
+      sent:false,
+      modal:false,
 
     }
+  },
+  watch: {
+    sent (val) {
+      if (!val) return
+      setTimeout(() => (this.sent = false), 10000)
+    },
   },
 
 
@@ -329,6 +367,25 @@ export default {
         console.error(error);
       }
     },
+    sendEmail() {
+      let message = `from: ${this.email}\r\nSubject: New message from your website\r\n\r\n${this.message}`;
+      Email.send({
+        Host: 'smtp.elasticemail.com',
+        Username: 'dexbag69@gmail.com',
+        Password: import.meta.env.VITE_SMPT_PASSWORD,
+        Port:2525,
+        To: 'dexterbagtang@gmail.com',
+        From: 'dexbag69@gmail.com',
+        Subject: 'New message from your website',
+        Body: message
+      }).then(() => {
+        console.log(this.email,this.body);
+      });
+      this.modal=false;
+      this.email='';
+      this.message='';
+      this.sent=true;
+    }
 
   }
 }
